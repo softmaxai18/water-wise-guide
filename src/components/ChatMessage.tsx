@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import { ChatMessage as ChatMessageType } from '@/types/waterHeater';
 import { cn } from '@/lib/utils';
 
@@ -28,8 +29,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message, isStreaming =
           ? "bg-[hsl(var(--chat-user-bg))] text-white rounded-br-md"
           : "bg-[hsl(var(--chat-assistant-bg))] text-foreground border border-border rounded-bl-md"
       )}>
-        <div className="text-sm leading-relaxed whitespace-pre-wrap">
-          {message.content}
+        <div className="text-base leading-relaxed prose prose-sm max-w-none [&_strong]:font-bold [&_strong]:text-inherit">
+          <ReactMarkdown 
+            components={{
+              p: ({children}) => <span>{children}</span>,
+              strong: ({children}) => <strong className="font-bold">{children}</strong>
+            }}
+          >
+            {message.content}
+          </ReactMarkdown>
           {isStreaming && (
             <span className="inline-block w-2 h-4 ml-1 bg-current typing-indicator opacity-75" />
           )}

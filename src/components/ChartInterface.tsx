@@ -47,6 +47,7 @@ export const ChartInterface: React.FC<ChartInterfaceProps> = ({
   };
 
   const chartOptions: ChartOptions<'bar'> = {
+    indexAxis: 'y', // This makes it horizontal
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -55,9 +56,6 @@ export const ChartInterface: React.FC<ChartInterfaceProps> = ({
     },
     scales: {
       x: {
-        display: false
-      },
-      y: {
         beginAtZero: true,
         max: 5,
         ticks: {
@@ -70,6 +68,19 @@ export const ChartInterface: React.FC<ChartInterfaceProps> = ({
         },
         grid: {
           color: 'hsl(var(--border))'
+        }
+      },
+      y: {
+        display: true,
+        ticks: {
+          font: {
+            size: 11,
+            weight: 'bold'
+          },
+          color: 'hsl(var(--foreground))'
+        },
+        grid: {
+          display: false
         }
       }
     },
@@ -101,7 +112,7 @@ export const ChartInterface: React.FC<ChartInterfaceProps> = ({
             return data?.categories[tooltipItems[0].dataIndex] || '';
           },
           label: (context) => {
-            return `${context.dataset.label}: ${context.parsed.y.toFixed(1)}/5`;
+            return `${context.dataset.label}: ${context.parsed.x.toFixed(1)}/5`; // Changed to x for horizontal bars
           }
         }
       },
